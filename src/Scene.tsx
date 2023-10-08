@@ -2,7 +2,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import fragmentShader from "./shaders/raw-shader/fragment.glsl";
 import vertexShader from "./shaders/raw-shader/vertex.glsl";
 import { useMemo, useRef } from "react";
-import { DoubleSide, ShaderMaterial, Vector2 } from "three";
+import { ShaderMaterial, Vector2 } from "three";
 
 export const Scene = () => {
   const { viewport } = useThree();
@@ -31,14 +31,15 @@ export const Scene = () => {
   return (
     <>
       <mesh key={`${viewport.width}_${viewport.height}`}>
-        <planeGeometry args={[planeWidth, planeWidth]}></planeGeometry>
+        <planeGeometry args={[planeWidth, planeWidth, 32, 32]}></planeGeometry>
         <rawShaderMaterial
+          // side={DoubleSide}
+          wireframe
           ref={materialRef}
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
           uniforms={uniforms}
         ></rawShaderMaterial>
-        {/* <meshBasicMaterial color={new Color("#FF0")}></meshBasicMaterial> */}
       </mesh>
     </>
   );
