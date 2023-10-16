@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import fragmentShader from "./shaders/raw-shader/fragment.glsl";
-import vertexShader from "./shaders/raw-shader/vertex.glsl";
+import fragmentShader from "./shaders/patterns/fragment.glsl";
+import vertexShader from "./shaders/patterns/vertex.glsl";
 import { useEffect, useMemo, useRef } from "react";
 import { ShaderMaterial, Vector2 } from "three";
 import { useTexture } from "@react-three/drei";
@@ -41,7 +41,8 @@ export const Scene = () => {
       //   console.log("sup");
       material.uniforms.uTime.value = clock.getElapsedTime();
       //   between -1 to 1, for both x and y
-      material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+      material.uniforms.uMouse.value.set((mouse.x + 1) / 2, (mouse.y + 1) / 2);
+      // console.log((mouse.x + 1) / 2, (mouse.y + 1) / 2);
     }
   });
 
@@ -51,7 +52,7 @@ export const Scene = () => {
 
   return (
     <>
-      <mesh key={`${viewport.width}_${viewport.height}`} scale={[1, 2 / 3, 1]}>
+      <mesh key={`${viewport.width}_${viewport.height}`}>
         <planeGeometry args={[planeWidth, planeWidth, 32, 32]}>
           <bufferAttribute
             attach="attributes-aRandom"
