@@ -7,7 +7,7 @@ import { useTexture } from "@react-three/drei";
 
 export const Scene = () => {
   const { viewport } = useThree();
-  const planeWidth = 0.8 * viewport.width;
+  const planeWidth = 0.8 * viewport.height;
   const materialRef = useRef<ShaderMaterial>(null);
   const flagTexture = useTexture("/flag.png");
 
@@ -41,7 +41,25 @@ export const Scene = () => {
       //   console.log("sup");
       material.uniforms.uTime.value = clock.getElapsedTime();
       //   between -1 to 1, for both x and y
-      material.uniforms.uMouse.value.set((mouse.x + 1) / 2, (mouse.y + 1) / 2);
+      // material.uniforms.uMouse.value.set((mouse.x + 1) / 2, (mouse.y + 1) / 2);
+
+      const originalX = (mouse.x + 1) / 2;
+      const originalY = (mouse.y + 1) / 2;
+
+      const xOffset = (1 - (0.8 * viewport.height) / viewport.width) / 2;
+
+      // Adjust for the 80% plane coverage
+      let mappedX = (originalX - xOffset) / (1 - 2 * xOffset);
+      let mappedY = (originalY - 0.1) / 0.8;
+
+      // Clamp between 0 and 1
+      mappedX = Math.min(Math.max(mappedX, 0), 1);
+      mappedY = Math.min(Math.max(mappedY, 0), 1);
+      console.log("Original Mouse:", originalX, originalY);
+      console.log("R3F Mouse:", mouse.x, mouse.y);
+      console.log("Mapped Mouse:", mappedX, mappedY);
+
+      material.uniforms.uMouse.value.set(mappedX, mappedY);
       // console.log((mouse.x + 1) / 2, (mouse.y + 1) / 2);
     }
   });

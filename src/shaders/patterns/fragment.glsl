@@ -163,11 +163,11 @@ void main() {
     // float strength = 1.0 - step(0.01, abs(distance(wavedUv, vec2(0.5, 0.5)) - 0.25));
 
     // pattern 38
-    // float mouseDistance = 0.01 / distance(vUv, uMouse);
+    float mouseDistance = 0.01 / distance(vUv, uMouse);
 
-    // vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 100.0 + uTime * 5.0 + mouseDistance * 20.0) * 0.1, vUv.y + sin(vUv.x * 100.0 + uTime * 5.0 + mouseDistance * 20.0) * 0.1);
-    // float strength = 1.0 - step(0.01, abs(distance(wavedUv, vec2(0.5, 0.5)) - 0.25));
-    // strength += mouseDistance;
+    vec2 wavedUv = vec2(vUv.x + sin(vUv.y * 100.0 + uTime * 5.0 + mouseDistance * 20.0) * 0.1, vUv.y + sin(vUv.x * 100.0 + uTime * 5.0 + mouseDistance * 20.0) * 0.1);
+    float strength = 1.0 - step(0.01, abs(distance(wavedUv, vec2(0.5, 0.5)) - 0.25));
+    strength += mouseDistance;
 
     // pattern 39
     // vec2 rotatedUv = rotate(vUv, uTime, vec2(0.5));
@@ -191,7 +191,7 @@ void main() {
     // float strength = 1.0 - abs(cnoise(vUv * 10.0));
 
     // pattern 48
-    float strength = step(0.5, sin(cnoise(vUv * 10.0) * 20.0));
+    // float strength = step(0.5, sin(cnoise(vUv * 10.0) * 20.0));
 
     vec4 color = vec4(vec3(strength), 1.0);
     // vec4 testColor = vec4(mouseDistance, 0.0, 0.0, 1.0);
